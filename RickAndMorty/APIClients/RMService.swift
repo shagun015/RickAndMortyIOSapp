@@ -37,15 +37,13 @@ final class RMService {
             return
         }
         
-        let task = URLSession.shared.dataTask(with: urlRequest) { data,_, error in
+        let task = URLSession.shared.dataTask(with: urlRequest) { data, _, error in
             guard let data = data, error == nil else {
                 completion(.failure(error ?? RMServiceError.failedToGetData))
                 return
             }
             
             do{
-                //let json = try JSONSerialization.jsonObject(with: data)
-                //print(String(describing: json))
                 let result = try JSONDecoder().decode(type.self, from: data)
                 completion(.success(result))
             }
@@ -57,7 +55,7 @@ final class RMService {
     }
     
     private func request(from rmRequest: RMRequest)->URLRequest? {
-        
+         
         guard let url = rmRequest.url else{ return nil}
         var request =  URLRequest(url: url)
         
